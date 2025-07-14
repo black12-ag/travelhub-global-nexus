@@ -16,6 +16,16 @@ export interface Property {
   amenities: string[];
   isVerified?: boolean;
   isSuperhost?: boolean;
+  distance?: string;
+  area?: string;
+  description?: string;
+  reviews_data?: Array<{
+    id: number;
+    user: string;
+    rating: number;
+    comment: string;
+    date: string;
+  }>;
 }
 
 interface PropertyCardProps {

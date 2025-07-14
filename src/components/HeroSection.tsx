@@ -29,14 +29,13 @@ export default function HeroSection({ onSearch }: HeroSectionProps) {
           {/* Hero Text */}
           <div className="space-y-6 animate-fade-in">
             <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold text-white leading-tight">
-              Discover Your
+              Hotels in
               <span className="block bg-gradient-to-r from-accent to-warning bg-clip-text text-transparent">
-                Perfect Stay
+                Addis Ababa
               </span>
             </h1>
             <p className="text-lg sm:text-xl text-white/90 max-w-2xl mx-auto leading-relaxed">
-              From luxury resorts to cozy properties, find accommodations that match your dreams. 
-              Book with confidence and create unforgettable memories.
+              Discover the best hotels across Ethiopia's capital city. From international luxury chains to authentic local experiences.
             </p>
           </div>
 
@@ -48,20 +47,20 @@ export default function HeroSection({ onSearch }: HeroSectionProps) {
           {/* Stats */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-12 animate-slide-up animation-delay-1000">
             <div className="text-center">
-              <div className="text-2xl md:text-3xl font-bold text-white">2M+</div>
-              <div className="text-sm text-white/80">Properties</div>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl md:text-3xl font-bold text-white">50K+</div>
+              <div className="text-2xl md:text-3xl font-bold text-white">150+</div>
               <div className="text-sm text-white/80">Hotels</div>
             </div>
             <div className="text-center">
-              <div className="text-2xl md:text-3xl font-bold text-white">100M+</div>
+              <div className="text-2xl md:text-3xl font-bold text-white">8</div>
+              <div className="text-sm text-white/80">Districts</div>
+            </div>
+            <div className="text-center">
+              <div className="text-2xl md:text-3xl font-bold text-white">50K+</div>
               <div className="text-sm text-white/80">Happy Guests</div>
             </div>
             <div className="text-center">
-              <div className="text-2xl md:text-3xl font-bold text-white">195+</div>
-              <div className="text-sm text-white/80">Countries</div>
+              <div className="text-2xl md:text-3xl font-bold text-white">24/7</div>
+              <div className="text-sm text-white/80">Support</div>
             </div>
           </div>
         </div>

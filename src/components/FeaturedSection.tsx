@@ -8,11 +8,10 @@ export default function FeaturedSection() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
-            Explore Featured Destinations
+            Top Areas in Addis Ababa
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Discover amazing places around the world. From tropical paradises to bustling cities, 
-            find your perfect escape.
+            Explore the best neighborhoods in Addis Ababa for your stay. Each area offers unique experiences and attractions.
           </p>
         </div>
 
@@ -34,7 +33,7 @@ export default function FeaturedSection() {
                 {/* Property Count Badge */}
                 <div className="absolute top-4 right-4">
                   <Badge className="bg-white/90 text-foreground">
-                    {destination.properties.toLocaleString()} properties
+                    {destination.properties} hotels
                   </Badge>
                 </div>
 
@@ -45,6 +44,9 @@ export default function FeaturedSection() {
                   </h3>
                   <p className="text-sm text-white/90">
                     {destination.country}
+                  </p>
+                  <p className="text-xs text-white/80 mt-1">
+                    {destination.description}
                   </p>
                 </div>
               </div>

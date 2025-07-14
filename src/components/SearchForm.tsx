@@ -8,6 +8,7 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { cn } from '@/lib/utils';
 import { format } from 'date-fns';
 import { CalendarIcon, MapPin, Users, Search } from 'lucide-react';
+import { addisAbabaAreas } from '@/data/sampleData';
 
 interface SearchFormProps {
   onSearch: (data: SearchData) => void;
@@ -27,7 +28,7 @@ export default function SearchForm({ onSearch, className }: SearchFormProps) {
   const [checkIn, setCheckIn] = useState<Date>();
   const [checkOut, setCheckOut] = useState<Date>();
   const [guests, setGuests] = useState(2);
-  const [type, setType] = useState<'properties' | 'hotels'>('properties');
+  const [type, setType] = useState<'properties' | 'hotels'>('hotels');
 
   const handleSubmit = () => {
     onSearch({
@@ -71,12 +72,19 @@ export default function SearchForm({ onSearch, className }: SearchFormProps) {
           {/* Location */}
           <div className="relative lg:col-span-2">
             <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
-            <Input
-              placeholder="Where are you going?"
-              value={location}
-              onChange={(e) => setLocation(e.target.value)}
-              className="pl-10 h-12 border-border/50 focus:border-primary"
-            />
+            <Select value={location} onValueChange={setLocation}>
+              <SelectTrigger className="pl-10 h-12 border-border/50 focus:border-primary">
+                <SelectValue placeholder="Select area in Addis Ababa" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Areas</SelectItem>
+                {addisAbabaAreas.map((area) => (
+                  <SelectItem key={area} value={area.toLowerCase()}>
+                    {area}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
 
           {/* Check-in Date */}
@@ -160,7 +168,7 @@ export default function SearchForm({ onSearch, className }: SearchFormProps) {
           className="w-full h-12 bg-gradient-hero hover:shadow-float transition-all duration-300 text-white font-medium"
         >
           <Search className="mr-2 h-5 w-5" />
-          Search {type === 'properties' ? 'Properties' : 'Hotels'}
+          Find Hotels in Addis Ababa
         </Button>
       </div>
     </Card>

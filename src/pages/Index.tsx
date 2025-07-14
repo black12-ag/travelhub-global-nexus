@@ -20,25 +20,24 @@ const Index = () => {
     // Simulate search delay
     await new Promise(resolve => setTimeout(resolve, 1000));
     
-    // Filter properties based on search type
-    const filtered = sampleProperties.filter(property => 
-      searchData.type === 'properties' ? property.type === 'property' : property.type === 'hotel'
-    );
+    // Filter hotels based on location
+    const filtered = sampleProperties.filter(property => {
+      if (searchData.location === 'all' || !searchData.location) return true;
+      return property.area?.toLowerCase() === searchData.location.toLowerCase();
+    });
     
     setSearchResults(filtered);
     setIsSearching(false);
     
     toast({
-      title: "Search Completed",
-      description: `Found ${filtered.length} ${searchData.type} in ${searchData.location || 'all locations'}`
+      title: "Hotels Found",
+      description: `Found ${filtered.length} hotels in ${searchData.location === 'all' ? 'Addis Ababa' : searchData.location}`
     });
   };
 
   const handlePropertyClick = (property: Property) => {
-    toast({
-      title: "Property Selected",
-      description: `Viewing details for ${property.title}`
-    });
+    // Navigate to hotel detail page
+    window.location.href = `/hotel/${property.id}`;
   };
 
   return (
@@ -56,10 +55,10 @@ const Index = () => {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
-              {isSearching ? 'Searching...' : 'Featured Accommodations'}
+              {isSearching ? 'Finding Hotels...' : 'Top Hotels in Addis Ababa'}
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Handpicked properties and hotels for exceptional experiences
+              Discover the best hotels across Addis Ababa's prime locations
             </p>
           </div>
 

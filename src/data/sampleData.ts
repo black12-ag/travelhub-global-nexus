@@ -11,6 +11,70 @@ export const addisAbabaAreas = [
   'Kirkos'
 ];
 
+export const nearbyLocations = {
+  'bole': [
+    'Bole Airport Area',
+    'Bole Medhanialem',
+    'Bole Michael',
+    'Bole Arabsa',
+    'Bole Bulbula',
+    'Edna Mall Area',
+    'Friendship City Center'
+  ],
+  'piazza': [
+    'Arat Kilo',
+    'Sidist Kilo',
+    'Red Terror Martyrs Memorial',
+    'Taitu Hotel Area',
+    'Post Office Square',
+    'Merkato Border'
+  ],
+  'kazanchis': [
+    'ECA Conference Center',
+    'Meskel Square',
+    'UN Economic Commission',
+    'Kazanchis Business District',
+    'Embassy Row'
+  ],
+  'mexico': [
+    'Mexico Square',
+    'CMC Area',
+    'Ring Road Junction',
+    'Government Quarter',
+    'National Theatre Area'
+  ],
+  'gerji': [
+    'Gerji Mebrat Hail',
+    'Gerji 4 Kilo',
+    'Gerji New Sites',
+    'Gerji Commercial Area'
+  ]
+};
+
+export const popularDistricts = [
+  {
+    name: 'Bole',
+    description: 'Modern district near the airport with international hotels and shopping',
+    hotelCount: 45,
+    avgPrice: 120,
+    highlights: ['Airport proximity', 'Shopping centers', 'International cuisine']
+  },
+  {
+    name: 'Piazza',
+    description: 'Historic heart of Addis Ababa with cultural attractions',
+    hotelCount: 28,
+    avgPrice: 85,
+    highlights: ['Historical sites', 'Cultural attractions', 'Traditional markets']
+  },
+  {
+    name: 'Kazanchis',
+    description: 'Business district with conference facilities and embassies',
+    hotelCount: 32,
+    avgPrice: 110,
+    highlights: ['Business hotels', 'Conference centers', 'Embassy quarter']
+  }
+];
+
 export const sampleProperties: Property[] = [
   {
     id: '1',

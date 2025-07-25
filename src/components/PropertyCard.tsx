@@ -3,6 +3,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Star, MapPin, Wifi, Car, Coffee, Waves } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useCurrency } from '@/contexts/CurrencyContext';
 
 export interface Property {
   id: string;
@@ -42,6 +43,8 @@ const amenityIcons: { [key: string]: any } = {
 };
 
 export default function PropertyCard({ property, onClick, className }: PropertyCardProps) {
+  const { formatPrice } = useCurrency();
+  
   return (
     <Card 
       className={cn(
@@ -129,7 +132,7 @@ export default function PropertyCard({ property, onClick, className }: PropertyC
         {/* Price */}
         <div className="flex items-end justify-between pt-2">
           <div>
-            <span className="text-xl font-bold text-foreground">${property.price}</span>
+            <span className="text-xl font-bold text-foreground">{formatPrice(property.price)}</span>
             <span className="text-sm text-muted-foreground"> / night</span>
           </div>
           <Button size="sm" className="bg-primary hover:bg-primary/90">

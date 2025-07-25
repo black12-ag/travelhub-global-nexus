@@ -1,8 +1,15 @@
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
-import { Menu, Globe, User, Heart, Calendar } from 'lucide-react';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Menu, User, Heart, Calendar, Settings, LogOut, Bell } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useAuth } from '@/contexts/AuthContext';
+import CurrencySelector from './CurrencySelector';
+import LanguageSelector from './LanguageSelector';
+import LoginModal from './auth/LoginModal';
+import RegisterModal from './auth/RegisterModal';
 
 interface NavbarProps {
   className?: string;
@@ -10,6 +17,9 @@ interface NavbarProps {
 
 export default function Navbar({ className }: NavbarProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const [showLoginModal, setShowLoginModal] = useState(false);
+  const [showRegisterModal, setShowRegisterModal] = useState(false);
+  const { user, isAuthenticated, logout } = useAuth();
 
   const navItems = [
     { name: 'Properties', href: '/properties' },
@@ -52,24 +62,73 @@ export default function Navbar({ className }: NavbarProps) {
 
           {/* Desktop Right Side */}
           <div className="hidden md:flex items-center space-x-4">
-            <Button variant="ghost" size="sm" className="text-foreground hover:text-primary">
-              <Globe className="h-4 w-4 mr-2" />
-              EN
-            </Button>
+            <LanguageSelector />
+            <CurrencySelector />
             <Button variant="ghost" size="sm" className="text-foreground hover:text-primary">
               <Heart className="h-4 w-4" />
             </Button>
             <Button variant="ghost" size="sm" className="text-foreground hover:text-primary">
               <Calendar className="h-4 w-4" />
             </Button>
-            <div className="flex items-center space-x-2 pl-4 border-l border-border">
-              <Button variant="outline" size="sm">
-                Sign In
-              </Button>
-              <Button size="sm" className="bg-gradient-hero text-white">
-                Sign Up
-              </Button>
-            </div>
+            {isAuthenticated ? (
+              <div className="flex items-center space-x-3 pl-4 border-l border-border">
+                <Button variant="ghost" size="sm" className="relative">
+                  <Bell className="h-4 w-4" />
+                  <span className="absolute -top-1 -right-1 h-2 w-2 bg-red-500 rounded-full"></span>
+                </Button>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="ghost" className="relative h-8 w-8 rounded-full">
+                      <Avatar className="h-8 w-8">
+                        <AvatarImage src={user?.avatar} alt={`${user?.firstName} ${user?.lastName}`} />
+                        <AvatarFallback>{user?.firstName?.[0]}{user?.lastName?.[0]}</AvatarFallback>
+                      </Avatar>
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className="w-56" align="end" forceMount>
+                    <div className="flex items-center justify-start gap-2 p-2">
+                      <div className="flex flex-col space-y-1 leading-none">
+                        <p className="font-medium">{user?.firstName} {user?.lastName}</p>
+                        <p className="w-[200px] truncate text-sm text-muted-foreground">
+                          {user?.email}
+                        </p>
+                      </div>
+                    </div>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem>
+                      <User className="mr-2 h-4 w-4" />
+                      <span>Profile</span>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>
+                      <Calendar className="mr-2 h-4 w-4" />
+                      <span>My Bookings</span>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>
+                      <Heart className="mr-2 h-4 w-4" />
+                      <span>Wishlist</span>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>
+                      <Settings className="mr-2 h-4 w-4" />
+                      <span>Settings</span>
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem onClick={logout}>
+                      <LogOut className="mr-2 h-4 w-4" />
+                      <span>Log out</span>
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </div>
+            ) : (
+              <div className="flex items-center space-x-2 pl-4 border-l border-border">
+                <Button variant="outline" size="sm" onClick={() => setShowLoginModal(true)}>
+                  Sign In
+                </Button>
+                <Button size="sm" className="bg-gradient-hero text-white" onClick={() => setShowRegisterModal(true)}>
+                  Sign Up
+                </Button>
+              </div>
+            )}
           </div>
 
           {/* Mobile menu button */}
@@ -117,27 +176,54 @@ export default function Navbar({ className }: NavbarProps) {
                       <Calendar className="h-4 w-4 mr-3" />
                       My Bookings
                     </Button>
-                    <Button variant="ghost" className="w-full justify-start">
-                      <Globe className="h-4 w-4 mr-3" />
-                      Language: English
-                    </Button>
+                    <div className="flex items-center justify-between">
+                      <LanguageSelector />
+                      <CurrencySelector />
+                    </div>
                   </div>
 
                   {/* Auth Buttons */}
-                  <div className="space-y-3 pt-4 border-t border-border">
-                    <Button variant="outline" className="w-full">
-                      Sign In
-                    </Button>
-                    <Button className="w-full bg-gradient-hero text-white">
-                      Sign Up
-                    </Button>
-                  </div>
+                  {isAuthenticated ? (
+                    <div className="space-y-3 pt-4 border-t border-border">
+                      <Button variant="ghost" className="w-full justify-start" onClick={logout}>
+                        <LogOut className="h-4 w-4 mr-3" />
+                        Sign Out
+                      </Button>
+                    </div>
+                  ) : (
+                    <div className="space-y-3 pt-4 border-t border-border">
+                      <Button variant="outline" className="w-full" onClick={() => setShowLoginModal(true)}>
+                        Sign In
+                      </Button>
+                      <Button className="w-full bg-gradient-hero text-white" onClick={() => setShowRegisterModal(true)}>
+                        Sign Up
+                      </Button>
+                    </div>
+                  )}
                 </div>
               </SheetContent>
             </Sheet>
           </div>
         </div>
       </div>
+
+      {/* Authentication Modals */}
+      <LoginModal
+        isOpen={showLoginModal}
+        onClose={() => setShowLoginModal(false)}
+        onSwitchToRegister={() => {
+          setShowLoginModal(false);
+          setShowRegisterModal(true);
+        }}
+      />
+      <RegisterModal
+        isOpen={showRegisterModal}
+        onClose={() => setShowRegisterModal(false)}
+        onSwitchToLogin={() => {
+          setShowRegisterModal(false);
+          setShowLoginModal(true);
+        }}
+      />
     </nav>
   );
 }
